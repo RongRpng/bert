@@ -269,12 +269,8 @@ class CommentProcessor(DataProcessor):
         # 按 BERT 推荐格式处理数据
         for index, row in df_train.iterrows():
             guid = 'train-%d' % index  # 索引
-            text_a = tokenization.convert_to_unicode(str(row[0]))  # 文本 1
-            #             text_b = tokenization.convert_to_unicode(str(row[1]))  # 文本 2
-            #             label = row[2]  # 文本标签
-            label = row[1]  # 文本标签
-            #             examples.append(InputExample(guid=guid, text_a=text_a,
-            #                                          text_b=text_b, label=label))
+            text_a = tokenization.convert_to_unicode(str(row[1]))  # 文本
+            label = row[2]  # 文本标签
             examples.append(InputExample(guid=guid, text_a=text_a, label=label))
         return examples
 
@@ -283,9 +279,8 @@ class CommentProcessor(DataProcessor):
         examples = []
         for index, row in self.df_dev.iterrows():
             guid = 'dev-%d' % index
-            text_a = tokenization.convert_to_unicode(str(row[0]))
-            #             text_b = tokenization.convert_to_unicode(str(row[1]))
-            label = row[1]
+            text_a = tokenization.convert_to_unicode(str(row[1]))
+            label = row[2]
             examples.append(InputExample(guid=guid, text_a=text_a,label=label))
         return examples
 
@@ -296,14 +291,13 @@ class CommentProcessor(DataProcessor):
         examples = []
         for index, row in df_test.iterrows():
             guid = 'test-%d' % index
-            text_a = tokenization.convert_to_unicode(str(row[0]))
-            #             text_b = tokenization.convert_to_unicode(str(row[1]))
+            text_a = tokenization.convert_to_unicode(str(row[1]))
             label = 'z'  # 随意指定测试数据标签
             examples.append(InputExample(guid=guid, text_a=text_a, label=label))
         return examples
 
     def get_labels(self):
-        return ['-1', '0', '1', '2'] # 示例三分类任务对应数据标签
+        return ['-1', '0', '1', '2']  # 示例4分类任务对应数据标签
 
 
 class MnliProcessor(DataProcessor):
