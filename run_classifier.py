@@ -269,7 +269,7 @@ class CommentProcessor(DataProcessor):
         examples = []
         # 按 BERT 推荐格式处理数据
         for index, row in df_train.iterrows():
-            guid = 'train-%d' % index  # 索引
+            guid = 'train-%d' % row[0]  # 索引
             text_a = tokenization.convert_to_unicode(str(row[1]))  # 文本
             label = row[2]  # 文本标签
             examples.append(InputExample(guid=guid, text_a=text_a, label=label))
@@ -279,7 +279,7 @@ class CommentProcessor(DataProcessor):
     def get_dev_examples(self, data_dir):
         examples = []
         for index, row in self.df_dev.iterrows():
-            guid = 'dev-%d' % index
+            guid = 'dev-%d' % row[0]
             text_a = tokenization.convert_to_unicode(str(row[1]))
             label = row[2]
             examples.append(InputExample(guid=guid, text_a=text_a, label=label))
@@ -291,7 +291,7 @@ class CommentProcessor(DataProcessor):
         df_test = pd.read_csv(file_path)
         examples = []
         for index, row in df_test.iterrows():
-            guid = 'test-%d' % index
+            guid = 'test-%d' % row[0]
             text_a = tokenization.convert_to_unicode(str(row[1]))
             label = '1'  # 随意指定测试数据标签
             examples.append(InputExample(guid=guid, text_a=text_a, label=label))
@@ -504,7 +504,7 @@ def convert_single_example(ex_index, example, label_list, max_seq_length,
     assert len(input_ids) == max_seq_length
     assert len(input_mask) == max_seq_length
     assert len(segment_ids) == max_seq_length
-
+    print(example.label)
     label_id = label_map[example.label]
     if ex_index < 5:
         tf.logging.info("*** Example ***")
