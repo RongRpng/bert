@@ -272,6 +272,7 @@ class CommentProcessor(DataProcessor):
             guid = 'train-%d' % row[0]  # 索引
             text_a = tokenization.convert_to_unicode(str(row[1]))  # 文本
             label = row[2]  # 文本标签
+            print(guid,"text_a: ",text_a,"label: ",label)
             examples.append(InputExample(guid=guid, text_a=text_a, label=label))
         return examples
 
@@ -500,11 +501,12 @@ def convert_single_example(ex_index, example, label_list, max_seq_length,
         input_ids.append(0)
         input_mask.append(0)
         segment_ids.append(0)
-
+    print(example.label)
+    print(label_map)
     assert len(input_ids) == max_seq_length
     assert len(input_mask) == max_seq_length
     assert len(segment_ids) == max_seq_length
-    print(example.label)
+    
     label_id = label_map[example.label]
     if ex_index < 5:
         tf.logging.info("*** Example ***")
