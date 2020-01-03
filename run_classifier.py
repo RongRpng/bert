@@ -254,7 +254,8 @@ class XnliProcessor(DataProcessor):
         """See base class."""
         return ["contradiction", "entailment", "neutral"]
 
-#自己のProcessor
+
+# 自己のProcessor
 class CommentProcessor(DataProcessor):
     # 传入训练数据
     def get_train_examples(self, data_dir):
@@ -281,7 +282,7 @@ class CommentProcessor(DataProcessor):
             guid = 'dev-%d' % index
             text_a = tokenization.convert_to_unicode(str(row[1]))
             label = row[2]
-            examples.append(InputExample(guid=guid, text_a=text_a,label=label))
+            examples.append(InputExample(guid=guid, text_a=text_a, label=label))
         return examples
 
     # 传入测试数据（预测）
@@ -292,7 +293,7 @@ class CommentProcessor(DataProcessor):
         for index, row in df_test.iterrows():
             guid = 'test-%d' % index
             text_a = tokenization.convert_to_unicode(str(row[1]))
-            label = 'z'  # 随意指定测试数据标签
+            label = '1'  # 随意指定测试数据标签
             examples.append(InputExample(guid=guid, text_a=text_a, label=label))
         return examples
 
@@ -836,7 +837,7 @@ def main(_):
         "mnli": MnliProcessor,
         "mrpc": MrpcProcessor,
         "xnli": XnliProcessor,
-        "self": CommentProcessor, # 添加自定义 Processor
+        "self": CommentProcessor,  # 添加自定义 Processor
     }
     tokenization.validate_case_matches_checkpoint(FLAGS.do_lower_case,
                                                   FLAGS.init_checkpoint)
